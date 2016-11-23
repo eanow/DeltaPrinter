@@ -5,23 +5,23 @@ ep=0.01;
 //parametrics
 //cutout for the AL extrusions, with 2 opposite tracks having an inset
 //tweaked from ideal to satisfy printing limits
-side=20;    //size of a side of the extrusion
-slot=6;     //width of the slots, on the face
-central=8;  //how wide the central pillar is; the slot depth is then (side-central)/2
+side=20+.8;    //size of a side of the extrusion
+slot=6-.4;     //width of the slots, on the face
+central=8+1;  //how wide the central pillar is; the slot depth is then (side-central)/2
 //corner radius
-vertex_rad=38;
+vertex_rad=40;
 //distance from edge to vertical 2020 shaft
-vert_inset=5;
+vert_inset=6;
 //thickness of the wall on the inside of the triangle
-inside_wall_thick=5;
+inside_wall_thick=6;
 //belt channel width
-channel_width=25;
+channel_width=32;
 //lenght of plastic alongside in-plane extrusion
-wing_length=60;
+wing_length=70;
 //mounting hardware
 m5_slot=6;
-m5_head=11; //diameter of M5 head
-m5_wall=4; //thickness of plastic between M5 and extrusion
+m5_head=10; //diameter of M5 head
+m5_wall=5; //thickness of plastic between M5 and extrusion
 module 2020_cutout_two()
 {
     difference()
@@ -42,8 +42,8 @@ module base_shape()
             //rounded vertex
             circle(r=vertex_rad,center=true);
             //'wings' along in plane extrusion lengths
-            rotate([0,0,60])translate([-side+vertex_rad-inside_wall_thick,wing_length/2])square([inside_wall_thick*2,wing_length],center=true); 
-            rotate([0,0,-60])translate([-side+vertex_rad-inside_wall_thick,-wing_length/2])square([inside_wall_thick*2,wing_length],center=true); 
+            rotate([0,0,60])translate([-side+vertex_rad-inside_wall_thick*2,wing_length/2])square([inside_wall_thick*4,wing_length],center=true); 
+            rotate([0,0,-60])translate([-side+vertex_rad-inside_wall_thick*2,-wing_length/2])square([inside_wall_thick*4,wing_length],center=true); 
         }
         //in plane extrusions
         rotate([0,0,60])translate([-side/2+vertex_rad,vertex_rad/2])square([side,vertex_rad],center=true);
@@ -114,11 +114,10 @@ module m5_holes()
 {
     //one for vertical
     translate([vertex_rad-vert_inset,0,side/2])m5_hole();
-    yy=.3*(channel_width)*(1/sin(60)); //hand tweaked
     bb=wing_length-side*.5;
     //two each for in plane
-    rotate([0,0,60])translate([vertex_rad-side,yy,side/2])rotate([0,0,180])m5_hole();
-    rotate([0,0,-60])translate([vertex_rad-side,-yy,side/2])rotate([0,0,180])m5_hole();
+    rotate([0,0,60])translate([vertex_rad-side,side/2,side/2])rotate([0,0,180])m5_hole();
+    rotate([0,0,-60])translate([vertex_rad-side,-side/2,side/2])rotate([0,0,180])m5_hole();
     rotate([0,0,60])translate([vertex_rad-side,bb,side/2])rotate([0,0,180])m5_hole();
     rotate([0,0,-60])translate([vertex_rad-side,-bb,side/2])rotate([0,0,180])m5_hole();
 }

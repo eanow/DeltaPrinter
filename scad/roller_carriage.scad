@@ -3,10 +3,10 @@ roller_axle_w=5.31; //width of the fixed portion of the captive bearing
 axle_r=5/2;
 roller_fixed_axle_r=8.5/2;
 roller_diameter=21.44;
-roller_inset=1.01;  //how far into the extrusion groove the roller fits
+roller_inset=2.01;  //how far into the extrusion groove the roller fits
 roller_gap_h=66; //distance, center to center, of the two rollers ont he same side
 roller_thick=7;
-carriage_thick=7; //thickness of the carriage, when considering it as a mostly flat slab
+carriage_thick=8; //thickness of the carriage, when considering it as a mostly flat slab
 carriage_clearance=1; //gap between carriage and extrusion
 slider_r=4/2;
 ep=0.01;
@@ -59,7 +59,7 @@ module carriage_plate()
     }
     //bendy annulus
     outer_r=xx+cone_fatness+roller_fixed_axle_r-extrusion_width/2;
-    inner_r=7;
+    inner_r=8;
     tall=roller_gap_h+2*cone_fatness+2*roller_fixed_axle_r;
     translate([extrusion_width/2,yy,tall/2-outer_r])rotate([90,0,0])difference()
     {
@@ -78,9 +78,9 @@ module carriage_plate()
     pinch_width=5;
     translate([xx+cone_fatness+roller_fixed_axle_r-pinch_width/2,yy,0])rotate([90,0,0])translate([0,0,carriage_thick/2])cube([pinch_width,45,carriage_thick],center=true);
     //captive block
-    pinch_gap=1.5;
+    pinch_gap=2;
     captive_width=xx+roller_fixed_axle_r+cone_fatness-extrusion_width/2-pinch_gap-pinch_width;
-    translate([extrusion_width/2+captive_width/2-ep,yy,-22.5+5])rotate([90,0,0])translate([0,0,carriage_thick/2])cube([captive_width,10,carriage_thick],center=true);
+    translate([extrusion_width/2+captive_width/2-ep,yy,-22.5+5])rotate([90,0,0])translate([0,0,carriage_thick/2])cube([captive_width,15,carriage_thick],center=true);
 }
 module captive_cuts()
 {
@@ -101,6 +101,12 @@ module captive_cuts()
     {
         cylinder(r=m3nut_r,h=m3nut_t,$fn=6,center=true);
         cylinder(r=m3slot/2,h=carriage_thick*2,$fn=20,center=true);
+    }
+    //small carve out of the spine for the flexy bit
+    intersection()
+    {
+        translate([xx,yy+1,0])rotate([90,0,0])cylinder(r=roller_fixed_axle_r+4+3,h=hh);
+        translate([0+ep,yy,0])rotate([90,0,0])translate([0,0,carriage_thick/2])cube([extrusion_width,roller_gap_h,carriage_thick+1],center=true);
     }
 }
 module slider_cuts()

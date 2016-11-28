@@ -1,6 +1,6 @@
 extrusion_width=20; //extrusion that the carriage is intended to fit around
 roller_axle_w=5.31; //width of the fixed portion of the captive bearing
-axle_r=5/2;
+axle_r=5/2+.2;
 roller_fixed_axle_r=8.5/2;
 roller_diameter=21.44;
 roller_inset=2.01;  //how far into the extrusion groove the roller fits

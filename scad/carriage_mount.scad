@@ -10,6 +10,7 @@ arm_gap=40; //center to center
 mag_d=12.05+.7;
 mag_thick=2.77+.4;
 mag_inner_d=8.36+2;
+magnet_clearance=2.5; //extra distance to clear the belts
 cup_wall=1.2;
 
 base_thick=6;
@@ -20,18 +21,57 @@ $fs=1;
 plate_w=40;
 plate_l=80;
 
+pulley_r=12.2/2; //pulley radius, outside of teeth
+idler_r=13/2+.8-1;
+belt_slot();
+
+module belt_slot()
+{
+    post_w=14;
+    post_h=7;
+    //at least 4 slots each side, plus gap of 6, so 8*2+6=22
+    post_l=30-ep;
+    gap=7+ep;
+    belt_t=1;
+    tooth_gap=2;
+    teeth=floor(.5*post_l/tooth_gap)+1;
+    translate([pulley_r,0,base_thick+post_h/2-ep])difference()
+    {
+        cube([post_w,post_l,post_h],center=true);    
+        //gap for wraps
+        //cube([post_w*2,gap,post_h*2],center=true);
+        //belt 
+        translate([0,-post_l/2,0])rotate([0,0,8])translate([0,post_l/2,0])
+        translate([belt_t/2,0,0])cube([belt_t,post_l*2,post_h*2],center=true);
+        translate([0,-post_l/2,0])rotate([0,0,8])translate([0,post_l/2,0])for (ii=[-teeth:1:teeth])
+        {
+            translate([-tooth_gap/4+ep,tooth_gap*ii,0])cube([tooth_gap/2,tooth_gap/2,post_h*2],center=true);
+        }
+        //belt
+        translate([idler_r-pulley_r,0,0])
+        { 
+            translate([0,post_l/2,0])rotate([0,0,8])translate([0,-post_l/2,0])
+            translate([belt_t/2,0,0])cube([belt_t,post_l*2,post_h*2],center=true);
+            translate([0,post_l/2,0])rotate([0,0,8])translate([0,-post_l/2,0])for (ii=[-teeth:1:teeth])
+            {
+                translate([-tooth_gap/4+ep,tooth_gap*ii,0])cube([tooth_gap/2,tooth_gap/2,post_h*2],center=true);
+            }
+        }
+    }
+}
+
 module base_shape()
 {
-    translate([0,0,base_thick/2])cube([20,90,base_thick],center=true);
+    translate([0,0,base_thick/2])cube([20,85,base_thick],center=true);
     hull()
     {
-        translate([0,2,base_thick/2])cube([20,50,base_thick],center=true);
+        translate([0,2,base_thick/2])cube([20,55,base_thick],center=true);
         translate([0,shift,0])translate([0,0,base_thick/2])cube([56,25,base_thick],center=true);
     }
 }
 shift=12;
 angle=30; //angle from vertical
-extra_z=4;
+extra_z=4.5+magnet_clearance;
 module magnet_posts()
 {
     //create pair, rotate into position
@@ -89,10 +129,10 @@ module final()
         union()
         {
             base_shape();   
-            magnet_posts();
+            translate([0,0,magnet_clearance])magnet_posts();
         }
-        magnet_space();
-        mount_holes();
+        translate([0,0,magnet_clearance])magnet_space();
+        translate([0,0,magnet_clearance])mount_holes();
         translate([0,0,-10])cube([160,160,20],center=true);//make it flat on bottom
     }
 }

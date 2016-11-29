@@ -15,9 +15,11 @@ vert_inset=6;
 //thickness of the wall on the inside of the triangle
 inside_wall_thick=6;
 //belt channel width
-channel_width=32;
+channel_width=28;
 //lenght of plastic alongside in-plane extrusion
 wing_length=70;
+//height of the frame piece
+piece_h=50;
 //mounting hardware
 m5_slot=6;
 m5_head=10; //diameter of M5 head
@@ -99,11 +101,11 @@ module final()
     {
         union()
         {
-            linear_extrude(height=50)base_shape();
-            translate([0,0,50-side])align_bumps();
+            linear_extrude(height=piece_h)base_shape();
+            translate([0,0,piece_h-side])align_bumps();
             align_bumps();
         }
-        translate([0,0,50-side])m5_holes();
+        translate([0,0,piece_h-side])m5_holes();
         m5_holes();
     }
 }

@@ -15,7 +15,7 @@ vert_inset=6;
 //thickness of the wall on the inside of the triangle
 inside_wall_thick=6;
 //belt channel width
-channel_width=32;
+channel_width=28;
 //lenght of plastic alongside in-plane extrusion
 wing_length=70;
 //mounting hardware

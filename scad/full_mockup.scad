@@ -1,14 +1,14 @@
 //2020 extrusion
 extrusion_w=20;
 //base
-base_ext_l=310;
+base_ext_l=290;
 //risers
-riser_ext_l=700;
+riser_ext_l=650;
 //vertex info
 vertex_rad=40;
 vert_inset=6;
 //printbed
-bed_d=250;
+bed_d=220;
 //height of the base frame
 base_h=50;
 //effector effective radius (accounting for the magnetic mount tilt)
@@ -40,7 +40,7 @@ echo("estimated vertical travel space",vert_travel);
 
 
 frame();
-//bed();
+bed();
 carriage();
 //arms();
 nema_dummy();

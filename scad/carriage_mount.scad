@@ -1,4 +1,4 @@
-
+//translate([0,0,-20])rotate([0,0,180])rotate([90,0,0])import("../stl/roller_carriage.stl");
 ep=0.01;
 //m3 hardware numbers that work
 m3nut_r=6.6/2;
@@ -21,14 +21,14 @@ $fs=1;
 plate_w=40;
 plate_l=80;
 
-pulley_r=12.2/2; //pulley radius, outside of teeth
-idler_r=13/2+.8-1;
-belt_slot();
+pulley_r=12.2/2-1.6; //pulley radius, outside of teeth
+idler_r=13/2+.8-1+1.6;
+
 
 module belt_slot()
 {
-    post_w=14;
-    post_h=7;
+    post_w=15;
+    post_h=9;
     //at least 4 slots each side, plus gap of 6, so 8*2+6=22
     post_l=30-ep;
     gap=7+ep;
@@ -37,36 +37,45 @@ module belt_slot()
     teeth=floor(.5*post_l/tooth_gap)+1;
     translate([pulley_r,0,base_thick+post_h/2-ep])difference()
     {
-        cube([post_w,post_l,post_h],center=true);    
+        translate([1.5,0,0])cube([post_w,post_l,post_h],center=true);    
         //gap for wraps
         //cube([post_w*2,gap,post_h*2],center=true);
         //belt 
-        translate([0,-post_l/2,0])rotate([0,0,8])translate([0,post_l/2,0])
+        translate([0,-post_l/2,0])rotate([0,0,5])translate([0,post_l/2,0])
         translate([belt_t/2,0,0])cube([belt_t,post_l*2,post_h*2],center=true);
-        translate([0,-post_l/2,0])rotate([0,0,8])translate([0,post_l/2,0])for (ii=[-teeth:1:teeth])
+        translate([0,-post_l/2,0])rotate([0,0,5])translate([0,post_l/2,0])for (ii=[-teeth:1:teeth])
         {
             translate([-tooth_gap/4+ep,tooth_gap*ii,0])cube([tooth_gap/2,tooth_gap/2,post_h*2],center=true);
         }
         //belt
         translate([idler_r-pulley_r,0,0])
         { 
-            translate([0,post_l/2,0])rotate([0,0,8])translate([0,-post_l/2,0])
+            translate([0,post_l/2,0])rotate([0,0,5])translate([0,-post_l/2,0])
             translate([belt_t/2,0,0])cube([belt_t,post_l*2,post_h*2],center=true);
-            translate([0,post_l/2,0])rotate([0,0,8])translate([0,-post_l/2,0])for (ii=[-teeth:1:teeth])
+            translate([0,post_l/2,0])rotate([0,0,5])translate([0,-post_l/2,0])for (ii=[-teeth:1:teeth])
             {
                 translate([-tooth_gap/4+ep,tooth_gap*ii,0])cube([tooth_gap/2,tooth_gap/2,post_h*2],center=true);
             }
         }
+
     }
 }
 
 module base_shape()
 {
-    translate([0,0,base_thick/2])cube([20,85,base_thick],center=true);
-    hull()
+    difference()
     {
-        translate([0,2,base_thick/2])cube([20,55,base_thick],center=true);
-        translate([0,shift,0])translate([0,0,base_thick/2])cube([56,25,base_thick],center=true);
+        union()
+        {
+            translate([0,0,base_thick/2])cube([20,85,base_thick],center=true);
+            hull()
+            {
+                translate([0,2,base_thick/2])cube([20,55,base_thick],center=true);
+                translate([0,shift,0])translate([0,0,base_thick/2])cube([56,25,base_thick],center=true);
+            }
+        }
+        //m5 bolt head
+        translate([-18.71,0,0])cylinder(r=9/2,h=base_thick*4,center=true); //offset manually entered from carriage information
     }
 }
 shift=12;
@@ -130,6 +139,7 @@ module final()
         {
             base_shape();   
             translate([0,0,magnet_clearance])magnet_posts();
+            belt_slot();
         }
         translate([0,0,magnet_clearance])magnet_space();
         translate([0,0,magnet_clearance])mount_holes();

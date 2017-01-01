@@ -1,14 +1,14 @@
 //2020 extrusion
 extrusion_w=20;
 //base
-base_ext_l=290;
+base_ext_l=330;
 //risers
-riser_ext_l=650;
+riser_ext_l=700;
 //vertex info
 vertex_rad=40;
 vert_inset=6;
 //printbed
-bed_d=220;
+bed_d=215;
 //height of the base frame
 base_h=50;
 //effector effective radius (accounting for the magnetic mount tilt)
@@ -21,6 +21,7 @@ centroid_arm=(sqrt(3.0)/3.0)*base_ext_l;
 riser_offset=centroid_arm+vertex_rad-extrusion_w/2-vert_inset;
 //carriage radius; effective distance of the center to the ball mounts on the carriage
 carriage_r=riser_offset-30;
+echo("radius to carriages",carriage_r);
 carriage_h=70/2; //carriage height above rod mounts
 
 
@@ -34,14 +35,18 @@ near_base=carriage_r-bed_d/2-eff_r;
 echo(near_base);
 vert_pos=sqrt((arm_l*arm_l)-(near_base*near_base));
 echo(vert_pos);
-vert_travel=riser_ext_l-base_h-extrusion_w-4-eff_h-carriage_h-vert_pos;
+vert_travel=riser_ext_l-base_h-extrusion_w-4-eff_h-carriage_h-vert_pos-50;//endstop=~50
 echo("estimated vertical travel space",vert_travel);
+//accuracy at inside edge
+relative=sqrt((arm_l*arm_l)-((near_base-1)*(near_base-1)))-vert_pos;
+echo("carriage travel for 1 mm movement on bed on inside",relative);
 
 
 
 frame();
 bed();
 carriage();
+translate([0,0,370])carriage();
 //arms();
 nema_dummy();
 //%translate([0,0,150])cube([carriage_r*2,carriage_r*2,300],center=true);

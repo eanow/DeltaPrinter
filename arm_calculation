@@ -1,0 +1,8 @@
+arm length= 292.5 minimum based on mockup
+
+target 295
+ball diameter is 9.5
+ball/socket adds 8.5 to length
+cap has 2 mm of flat on top of rod
+
+so carbon rod needs to be 295-(8.5*2)-(4) long = 274mm long, jig will be 295+9.5=304.5 mm for assembly

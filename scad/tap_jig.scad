@@ -1,4 +1,5 @@
-rod_r=6/2+.2; //.4 too big, 0 too small
+//rod_r=6/2+.2; //.4 too big, 0 too small
+rod_r=8/2+.2;
 m4_r=4.5/2-.2;
 difference()
 {

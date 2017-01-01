@@ -81,6 +81,12 @@ module carriage_plate()
     pinch_gap=2;
     captive_width=xx+roller_fixed_axle_r+cone_fatness-extrusion_width/2-pinch_gap-pinch_width;
     translate([extrusion_width/2+captive_width/2-ep,yy,-22.5+5])rotate([90,0,0])translate([0,0,carriage_thick/2])cube([captive_width,15,carriage_thick],center=true);
+    //enstop hitter
+    translate([-xx,yy,tall/2])rotate([90,0,0])linear_extrude(hh)minkowski()
+    {
+        square([6,16],center=true);
+        circle(r=2,$fn=30);
+    }
 }
 module captive_cuts()
 {

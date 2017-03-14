@@ -55,13 +55,13 @@ module bracket()
     {
         translate([0,inside_wall_thick,0])rotate([90,0,0])linear_extrude(height=inside_wall_thick)minkowski()
         {
-            square([side-round*2,(piece_h-6)-round*2],center=true);
+            square([side-2-round*2,(piece_h-6)-round*2],center=true);
             //cube([side,inside_wall_thick,piece_h-5],center=true);
             circle(r=round,$fn=20);
         }
         translate([0,y_l/2,-inside_wall_thick/2])linear_extrude(inside_wall_thick)minkowski()
         {
-            square([side-round*2,y_l-round*2],center=true);
+            square([side-2-round*2,y_l-round*2],center=true);
             //cube([side,y_l,inside_wall_thick],center=true);
             circle(r=round,$fn=20);
         }
@@ -71,25 +71,25 @@ module bracket()
     {
         translate([0,0,0])rotate([-90,0,0])linear_extrude(height=ep)minkowski()
         {
-            square([mount_gap+side-round*2,(piece_h-5)-round*2],center=true);
+            square([mount_gap-5+side-round*2,(piece_h-5)-round*2],center=true);
             //cube([side,inside_wall_thick,piece_h-5],center=true);
             circle(r=round-.5,$fn=20);
         }
         translate([0,1,0])rotate([-90,0,0])linear_extrude(height=ep)minkowski()
         {
-            square([mount_gap+side-round*2,(piece_h-5)-round*2],center=true);
+            square([mount_gap-5+side-round*2,(piece_h-5)-round*2],center=true);
             //cube([side,inside_wall_thick,piece_h-5],center=true);
             circle(r=round,$fn=20);
         }
-        translate([0,inside_wall_thick-1-ep,0])rotate([90,0,0])linear_extrude(height=ep)minkowski()
+        translate([0,inside_wall_thick-1-ep,0])rotate([-90,0,0])linear_extrude(height=ep)minkowski()
         {
-            square([mount_gap+side-round*2,(piece_h-5)-round*2],center=true);
+            square([mount_gap-5+side-round*2,(piece_h-5)-round*2],center=true);
             //cube([side,inside_wall_thick,piece_h-5],center=true);
             circle(r=round,$fn=20);
         }
-        translate([0,inside_wall_thick-ep,0])rotate([90,0,0])linear_extrude(height=ep)minkowski()
+        translate([0,inside_wall_thick-ep,0])rotate([-90,0,0])linear_extrude(height=ep)minkowski()
         {
-            square([mount_gap+side-round*2,(piece_h-5)-round*2],center=true);
+            square([mount_gap-5+side-round*2,(piece_h-5)-round*2],center=true);
             //cube([side,inside_wall_thick,piece_h-5],center=true);
             circle(r=round-.5,$fn=20);
         }

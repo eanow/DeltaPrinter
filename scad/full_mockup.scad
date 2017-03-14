@@ -26,6 +26,8 @@ carriage_h=70/2; //carriage height above rod mounts
 //center to inside edge of frame
 //radius of virtual triangle
 virt_r=((base_ext_l)/2)/(sqrt(3));
+bed_mount_r=(virt_r+(vertex_rad-extrusion_w));
+echo(bed_mount_r);
 //cube([(virt_r+(vertex_rad-extrusion_w))*2,(virt_r+(vertex_rad-extrusion_w))*2,100],center=true);
 
 
@@ -50,9 +52,17 @@ frame();
 bed();
 carriage();
 translate([0,0,370])carriage();
+bed_mount();
 //arms();
 nema_dummy();
 //%translate([0,0,150])cube([carriage_r*2,carriage_r*2,300],center=true);
+module bed_mount()
+{
+    for(aa=[0:120:240])
+    {
+    color([.2,.2,.9])rotate([0,0,aa])translate([-(virt_r+(vertex_rad-extrusion_w)),0,base_h/2])rotate([0,0,-90])import("../stl/bed_mount.stl");
+    }
+}
 module nema_dummy()
 {
     aa=8; //pully location

@@ -63,13 +63,16 @@ gear1_base_height = 8;
  */
 gear1_shaft_diameter = 5 + 0.35;
 /* Set-screw diameter, mind tolerance */
-gear1_setscrew_diameter = 3 + 0.4;
+gear1_setscrew_diameter = 2 + 0.4;
+//gear1_setscrew_diameter = 3 + 0.4;
 /* Set-nut width, measured across the flat sides,
  * mind tolerance
  */
-gear1_setnut_width = 5.5 + 0.4;
+//gear1_setnut_width = 5.5 + 0.4;
+gear1_setnut_width = 3.8 + 0.4;
 /* Set-nut height, mind tolerance */
-gear1_setnut_height = 2.4 + 0.2;
+//gear1_setnut_height = 2.4 + 0.2;
+gear1_setnut_height = 1.8 + 0.2;
 
 /* Stepper D-Shaft support
  * If you have a stepper with a D-shaped shaft
@@ -137,7 +140,7 @@ gear2_middle_rounding = 3;
  * mind tolerance
  * (a tolerance of 0.35mm worked fine in my case)
  */
-gear2_nut_diameter = 14 + 0.35;
+gear2_nut_diameter = 12.7 + 0.35;
 
 /* Depth that the nut should be sunk inside the holder */
 gear2_nut_sunk = 6.5;
@@ -528,8 +531,8 @@ if (printing == 1) {
     translate([distance_between_axles/2 + 5,0,gear_height])
         rotate([0,180,0])
             gear1();
-    translate([-distance_between_axles/2 - 5,0,0])
-        gear2();
+    //translate([-distance_between_axles/2 - 5,0,0])
+    //    gear2();
 } else {
     //Small gear (gear 1)
     gear1();

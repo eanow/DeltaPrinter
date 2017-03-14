@@ -10,6 +10,7 @@ arm_gap=40; //center to center
 mag_d=12.05+.7;
 mag_thick=2.77+.4;
 mag_inner_d=8.36+2;
+magnet_clearance=2.5; //extra distance for magnets
 cup_wall=1.2;
 
 base_thick=6;
@@ -39,9 +40,9 @@ module base_shape()
         }
     }
 }
-shift=22;
+shift=24;
 angle=30; //angle from vertical
-extra_z=4;
+extra_z=4.5+magnet_clearance;
 module magnet_posts()
 {
     //create pair, rotate into position

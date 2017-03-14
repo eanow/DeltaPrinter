@@ -71,10 +71,10 @@ default_mounting_holes=mounting_holes_symmetrical;
 wade(hotend_mount=default_extruder_mount,mounting_holes=default_mounting_holes);
 
 // Bearing Washer
-translate([52,70,0]) bearing_washer();
+//translate([52,70,0]) bearing_washer();
 
 // Guidler
-translate([-20,0,15.25]) rotate([0,-90,0]) wadeidler();
+//translate([-20,0,15.25]) rotate([0,-90,0]) wadeidler();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Visualisation
@@ -202,7 +202,7 @@ screw_head_recess_depth=3;
 motor_mount_rotation=0;
 motor_mount_translation=[48,50+elevation,0];
 //motor_mount_translation=[52.5,38,0]; //original
-motor_mount_thickness=8;
+motor_mount_thickness=8+4;
 
 large_wheel_translation=[50.5-(7.4444+32.0111+0.25),34+elevation,0];
 
@@ -214,7 +214,7 @@ block_top_right=[wade_block_width,wade_block_height];
 
 layer_thickness=0.2; // AndrewBCN : 0.2mm recommended
 filament_feed_hole_d=(filament_diameter*1.1)/cos(180/8);
-hobbing_depth=2;
+hobbing_depth=.25;//2;
 echo ("filament_feed_hole_d", filament_feed_hole_d);
 
 //This is the distance from the centre of the filament to the centre of the hobbed bolt.
@@ -416,7 +416,7 @@ echo("bhmh", mounting_holes)
 	cylinder(r=m3_diameter/2,h=idler_short_side-2*idler_hinge_width-0.5,center=true,$fn=16);
 
 	translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
-	cylinder(r=m3_nut_diameter/2+0.25,h=1,$fn=40);
+	cylinder(r=m3_nut_diameter/2,h=1,$fn=40);
 
 	//Rounded cutout for idler hinge.
 	render()
@@ -661,7 +661,7 @@ module wadeidler()
 					center=true,$fn=60);
 				for (i=[0,1])
 				rotate([180*i,0,0])
-				translate([0,0,6.95/2]) // AndrewBCN: 0.05mm tolerance added here
+				translate([0,0,7.1/2]) // AndrewBCN: 0.05mm tolerance added here
 				cylinder(r1=12/2,r2=16/2,h=2);
 			}
 			cylinder(h=idler_short_side-6,r=m8_diameter/2-0.25/*Tight*/,
@@ -676,7 +676,7 @@ module wadeidler()
 		//Nut trap for fulcrum screw.
 		translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
 		rotate(360/16)
-		cylinder(h=3,r=m3_nut_diameter/2+0.2,$fn=6); // AndrewBCN: 0.2mm tolerance added here
+		cylinder(h=3,r=m3_nut_diameter/2,$fn=6); // AndrewBCN: 0.2mm tolerance added here
 
 		for(idler_screw_hole=[-1,1])
 		translate(idler_axis+[2-idler_height,0,0])
@@ -782,7 +782,7 @@ module basic_bracket() {
         translate([-0.1,0,0.5]) rotate([45,0,0]) cube([3.5,20,12]);
       }
       // PTFE tube strain relief
-      translate([11.7,10,4]) difference() {
+      translate([11.7-2+hobbing_depth,10,4]) difference() {
         translate([0,0,0]) cube([12,8,10.5]);
         // PTFE tube rest
         translate([6,9,10.5]) rotate([90,0,0]) cylinder(r=2.4, h=10);

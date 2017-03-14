@@ -1,7 +1,7 @@
 magnet_r=11.8/2;
-hh=15;
+hh=15-2.5;//15;
 
-chop_h=10;
+chop_h=10-2.5;//10;
 
 intersection()
 {

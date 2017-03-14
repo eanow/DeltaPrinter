@@ -1,7 +1,7 @@
 //2020 extrusion
 extrusion_w=20;
 //base
-base_ext_l=330;
+base_ext_l=331;
 //risers
 riser_ext_l=700;
 //vertex info
@@ -23,6 +23,10 @@ riser_offset=centroid_arm+vertex_rad-extrusion_w/2-vert_inset;
 carriage_r=riser_offset-30;
 echo("radius to carriages",carriage_r);
 carriage_h=70/2; //carriage height above rod mounts
+//center to inside edge of frame
+//radius of virtual triangle
+virt_r=((base_ext_l)/2)/(sqrt(3));
+//cube([(virt_r+(vertex_rad-extrusion_w))*2,(virt_r+(vertex_rad-extrusion_w))*2,100],center=true);
 
 
 //arm math
@@ -40,7 +44,6 @@ echo("estimated vertical travel space",vert_travel);
 //accuracy at inside edge
 relative=sqrt((arm_l*arm_l)-((near_base-1)*(near_base-1)))-vert_pos;
 echo("carriage travel for 1 mm movement on bed on inside",relative);
-
 
 
 frame();
@@ -70,11 +73,11 @@ module carriage()
 {
     roller_offset=19;
     translate([riser_offset,0,200])rotate([0,0,90])import("../stl/roller_carriage.stl");
-    translate([riser_offset-roller_offset,0,200])rotate([0,-90,0])rotate([0,0,-90])import("../stl/carriage_mount.stl");
+    translate([riser_offset-roller_offset,0,200])rotate([0,-90,0])rotate([0,0,-90])import("../stl/carriage_mount_tension.stl");
 }
 module bed()
 {
-    color([.8,.2,.2])translate([0,0,base_h+1])cylinder(r=bed_d/2,h=3);
+    color([.8,.2,.2])translate([0,0,base_h+1])cylinder(r=bed_d/2,h=3,$fn=50);
 }
 module frame()
 {

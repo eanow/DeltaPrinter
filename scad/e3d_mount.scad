@@ -1,6 +1,6 @@
 module hotend()
 {
-    translate([0,0,-8])rotate([90,0,0])import("../stl/e3dmockup.stl");
+    translate([0,0,-8.7])rotate([90,0,0])import("../stl/e3dmockup.stl");
 }
 $fs=1;
 $fa=1;
@@ -20,11 +20,19 @@ m3nut_t=3;
 m3slot=3.5;
 m3_head_r=6.1/2;
 
+m2nut_r=5/2;
+m2slot=2.5;
+m2head_r=5/2;
+
 neck_outer_r=16/2;
 neck_inner_r=12/2;
 neck_inner_h=6;
 neck_lower_h=3;
 neck_upper_h=3.7;
+
+zip_head=5;
+zip_body=3;
+zip_thick=4;
 
 //three mount points
 module top_plate_shape()
@@ -40,7 +48,7 @@ module top_plate_shape()
         }
         for (aa=[0:120:300])
         {
-            rotate([0,0,aa])translate([hole_d/2+6,0])rotate([0,0,45])square([10,10],center=true);
+            rotate([0,0,aa])translate([hole_d/2+6,0])circle(r=5);//rotate([0,0,45])square([10,10],center=true);
         }
     }
 }
@@ -70,12 +78,25 @@ module hort_screws()
 {
     for (bb=[-1:2:1])
     {
-        translate([0,bb*10,5.8])rotate([0,-90,0])
+        translate([0,bb*9.5,5.8])rotate([0,-90,0])
         {   
-            translate([0,0,-5])cylinder(r=m3slot/2,h=hole_d);
-            translate([0,0,-hole_d-5+ep])cylinder(r=m3_head_r,h=hole_d);
+            translate([0,0,-4])cylinder(r=m2slot/2,h=hole_d);
+            translate([0,0,-hole_d-4+ep])cylinder(r=m2head_r,h=hole_d);
+            translate([0,0,4])cylinder(r=m2nut_r,h=hole_d,$fn=6);
         }
     }
+    /*
+    //zip tie ring
+    translate([0,0,2])difference()
+    {
+        %cylinder(r=hole_d/2,h=zip_body,center=true);
+        %cylinder(r=hole_d/2-zip_thick,h=zip_body+1,center=true);
+    }
+    //zip tie ring
+    translate([0,0,7.5])difference()
+    {
+        %cylinder(r=hole_d/2,h=zip_body);
+    }*/
 }
 
 module final()
@@ -95,6 +116,22 @@ module final()
 //cut in half
 intersection()
 {
-    translate([50,0,-1])cube([100,100,30],center=true);
+    union()
+    {
+        translate([50,0,-1])cube([100,100,50],center=true);
+        translate([0,11,0])rotate([0,0,45])cube([3,3,50],center=true);
+        translate([0,-11,0])rotate([0,0,45])cube([3,3,50],center=true);
+    }
     final();
+}
+//cut in half
+translate([-10,0,0])difference()
+{
+    final();
+    union()
+    {
+        translate([50,0,-1])cube([100,100,50],center=true);
+        translate([0,11,0])rotate([0,0,45])cube([3,3,50],center=true);
+        translate([0,-11,0])rotate([0,0,45])cube([3,3,50],center=true);
+    }
 }

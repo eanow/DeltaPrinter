@@ -98,9 +98,14 @@ module magnet_posts()
                 }
             }
         }
-    
 }
-
+//offset for marlin config
+aa_xx=0+arm_gap*.5;
+bb_zz=-extra_z*2+(extra_z*2+mag_thick*2+cup_wall);
+aa_zz=magnet_clearance+extra_z+bb_zz*cos(angle);
+aa_yy=2+shift+-sin(angle)*(-extra_z*2+(extra_z*2+mag_thick*2+cup_wall));
+//translate([aa_xx,aa_yy,aa_zz])sphere(r=ball_d/2,$fn=100);
+echo(aa_zz);
 module spring_holder()
 {
     translate([0,shift-1,base_thick-ep])cylinder(r1=m3slot/2+4.8,r2=m3slot/2+2,h=8.5);

@@ -10,7 +10,9 @@ carriage_thick=8; //thickness of the carriage, when considering it as a mostly f
 carriage_clearance=1; //gap between carriage and extrusion
 slider_r=4/2;
 ep=0.01;
-
+//%cube([1,2*(carriage_thick+carriage_clearance+extrusion_width/2),1],center=true);
+//delta config
+echo((carriage_thick+carriage_clearance+extrusion_width/2));
 //carriage is designed in usage orientation
     xx=roller_diameter/2+extrusion_width/2-roller_inset;
     zz=roller_gap_h/2;

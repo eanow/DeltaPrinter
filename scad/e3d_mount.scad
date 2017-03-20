@@ -24,8 +24,8 @@ m2nut_r=5/2;
 m2slot=2.5;
 m2head_r=5/2;
 
-neck_outer_r=16/2;
-neck_inner_r=12/2;
+neck_outer_r=16/2+.2;
+neck_inner_r=12/2+.2;
 neck_inner_h=6;
 neck_lower_h=3;
 neck_upper_h=3.7;

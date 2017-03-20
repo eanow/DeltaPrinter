@@ -55,7 +55,13 @@ translate([0,0,370])carriage();
 bed_mount();
 //arms();
 nema_dummy();
+ramps();
 //%translate([0,0,150])cube([carriage_r*2,carriage_r*2,300],center=true);
+
+module ramps()
+{
+    translate([centroid_arm+vertex_rad-extrusion_w/2,19,50])rotate([-90,0,-90])import("../stl/ramps-mount-stronger.stl");
+}
 module bed_mount()
 {
     for(aa=[0:120:240])
@@ -126,5 +132,7 @@ module frame()
         }
     }
 }
-
+//cube([2*(centroid_arm+vertex_rad-extrusion_w/2-vert_inset),1,1],center=true);
+//marlin config
+echo("vertical distance:",(centroid_arm+vertex_rad-extrusion_w/2-vert_inset));
 

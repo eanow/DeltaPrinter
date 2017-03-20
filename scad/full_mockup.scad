@@ -56,8 +56,12 @@ bed_mount();
 //arms();
 nema_dummy();
 ramps();
+cable_guide();
 //%translate([0,0,150])cube([carriage_r*2,carriage_r*2,300],center=true);
-
+module cable_guide()
+{
+    translate([centroid_arm+5+10,-40,0])rotate([0,0,-60])translate([0,0,25])rotate([90,0,0])import("../stl/cable_guide.stl");
+}
 module ramps()
 {
     translate([centroid_arm+vertex_rad-extrusion_w/2,19,50])rotate([-90,0,-90])import("../stl/ramps-mount-stronger.stl");

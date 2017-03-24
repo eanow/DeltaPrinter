@@ -24,6 +24,18 @@ hole_d=30;
 ball_d=9.5+.6;
 socket_lift=6;
 
+//zip tie
+module zip_slot()
+{
+    //annulus
+    linear_extrude(height=4)difference()
+    {
+        circle(r=7);
+        circle(r=4);
+    }
+}
+
+
 //effector is basically triangular, with a large hole in the center. 
 //Actual hot end will be mounted to the effector using moutning holes.
 
@@ -79,7 +91,11 @@ module final()
         }
         mount_holes();
         ball_sockets();
-        //translate([0,0,-10])cube([effector_d*2,effector_d*2,20],center=true);//make it flat on bottom
+                //translate([0,0,-10])cube([effector_d*2,effector_d*2,20],center=true);//make it flat on bottom
+        for (aa=[0:120:240])
+        {
+        rotate([0,0,aa])translate([-effector_d*.67,0,base_thick/2])rotate([0,30,0])translate([0,0,-2])zip_slot();
+        }
     }
 }
 final();/*

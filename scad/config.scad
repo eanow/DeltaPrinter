@@ -26,6 +26,8 @@ m5_head=10; //diameter of M5 head
 m5_wall=5; //thickness of plastic between M5 and extrusion
 //m3 sizing
 m3_slot=3.5;
+m3nut_r=6.6/2;
+m3nut_t=3;
 module 2020_cutout_two()
 {
     ss=side+.8; //printer tolerance

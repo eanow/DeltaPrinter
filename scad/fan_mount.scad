@@ -70,8 +70,8 @@ module plate()
                 rotate([0,0,30])translate([0,(bracket_r-2),0])cube([fansize,8,1],center=true);
                 
             }
-            rotate([0,0,-30])translate([0,-bracket_r/2,0])cube([fansize,bracket_r,3],center=true);
-            rotate([0,0,30])translate([0,bracket_r/2,0])cube([fansize,bracket_r,3],center=true);
+            rotate([0,0,-30])translate([0,-bracket_r/2,0])cube([fansize,bracket_r,5],center=true);
+            rotate([0,0,30])translate([0,bracket_r/2,0])cube([fansize,bracket_r,5],center=true);
         }
     }
 }

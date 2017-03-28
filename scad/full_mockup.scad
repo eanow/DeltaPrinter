@@ -58,6 +58,35 @@ nema_dummy();
 ramps();
 cable_guide();
 //%translate([0,0,150])cube([carriage_r*2,carriage_r*2,300],center=true);
+psu();
+base_posts();
+atx_base_wall();
+//atx base wall()
+module atx_base_wall()
+{
+    short_leg_x=(base_ext_l/2)*2/sqrt(3);
+    short_leg=vertex_rad+(base_ext_l/2*sqrt(3))-short_leg_x;
+    translate([-short_leg+10,0,-91.8/2])rotate([0,-90,0])rotate([0,0,-90])import("../stl/atx_base_wall.stl");
+}
+
+module base_posts()
+{
+    for (aa=[0:120:240])
+    {    
+        rotate([0,0,aa])translate([centroid_arm,0,0])
+        {
+            color([.2,.2,.9])translate([0,0,-91.8])import("../stl/base_post.stl");
+        }
+    }
+}
+module psu()
+{
+    //150 mm side is where the plug is
+    short_leg_x=(base_ext_l/2)*2/sqrt(3);
+    short_leg=vertex_rad+(base_ext_l/2*sqrt(3))-short_leg_x;
+    color([.8,.8,.8])translate([-short_leg+140/2+10,0,-91.8/2+(1.1)])rotate([0,0,-90])cube([150,140,86],center=true);
+}
+
 module cable_guide()
 {
     translate([centroid_arm+5+10,-40,0])rotate([0,0,-60])translate([0,0,25])rotate([90,0,0])import("../stl/cable_guide.stl");

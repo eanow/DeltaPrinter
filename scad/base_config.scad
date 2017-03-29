@@ -18,3 +18,9 @@ atx_screw_slot=3.9;
 atx_screw_head=7.5;
 
 atx_screw_head_t=2.4;
+
+m4_head_d = 8;
+m4_nut_r=8.1/2;
+m3_head_r=6.1/2;
+m3_head_t=2.5;
+m4_slot=4.5;

@@ -21,12 +21,8 @@ plate_round=2;
 //plate height
 ph=vertical_buffer+atx_height-fit_tolerance*2; //tolerance gap top and bottom
 
-//ATX box needs a little bit of recess
-atx_recess=grid_wall_thick-(atx_screw_depth+atx_screw_head_t);
 
-right();
-//left();
-//base_tie();
+left();
 
 module left()
 {
@@ -37,13 +33,10 @@ module left()
             union()
             {
                 rough_shape();
-                slope();
             }
-            atx_cutout();
-            truss_grid(truss_wall);
-            mirror([0,1,0])truss_grid(truss_wall);
+            //truss_grid(truss_wall);
+            //mirror([0,1,0])truss_grid(truss_wall);
             m3_holes();
-            atx_holes_left();
             m4_hole();
         }
         
@@ -52,77 +45,6 @@ module left()
             m4_mount();
             m4_hole();
         }
-    }
-}
-
-module right()
-{
-    mirror([1,0,0])translate([.5*(eto+euh-fit_tolerance)+fit_tolerance-base_ext_l/2,0,0])
-    {
-        difference()
-        {
-            union()
-            {
-                rough_shape();
-                rough_shape_right();
-                slope();
-            }
-            atx_cutout_right();
-            truss_grid(truss_wall);
-            mirror([0,1,0])truss_grid(truss_wall);
-            m3_holes();
-            atx_holes_right();
-            m4_hole();
-        }
-        
-        difference()
-        {
-            m4_mount();
-            m4_hole();
-        }
-    }
-}
-
-//connector from m4 to M5 on extrusion
-module base_tie()
-{
-    spacing=(m4_nut_r+2.0)+side/2;
-    difference()
-    {
-        hull()
-        {
-            linear_extrude(height=inside_wall_thick-bevel)minkowski()
-            {
-                square([1,spacing],center=true);
-                circle(r=m5_head/2+2.1);
-            }
-            linear_extrude(height=inside_wall_thick)minkowski()
-            {
-                square([1,spacing],center=true);
-                circle(r=m5_head/2+2.1-bevel);
-            }
-        }
-        //m4
-        translate([0,-.5*spacing,-ep])cylinder(r=m4_slot/2,h=inside_wall_thick+2*ep);
-        translate([0,-.5*spacing,m5_wall-ep])cylinder(r=m4_head/2,h=1+2*ep);
-        //m5
-        translate([0,.5*spacing,-ep])cylinder(r=m5_slot/2,h=inside_wall_thick+2*ep);
-        translate([0,.5*spacing,m5_wall-ep])cylinder(r=m5_head/2,h=1+2*ep);
-    }
-    
-}
-
-//slope
-module slope()
-{
-    intersection()
-    {
-        hull()
-        {
-            translate([20/2-(eto+euh-fit_tolerance)/2+euh-(atx_width-atx_upper_screw_spacing)/2-fit_tolerance*1.5-bracket_wall,0,.5])cube([20,ph+5,1],center=true);
-            translate([20/2-(eto+euh-fit_tolerance)/2+euh-(atx_width-atx_upper_screw_spacing)/2-fit_tolerance*1.5-bracket_wall,-ph/2,-atx_depth/3])cube([20,1,1],center=true);
-        }
-        translate([0,0,-atx_depth/2])linear_extrude(height=atx_depth)rough_outline(plate_round);
     }
 }
 
@@ -136,48 +58,7 @@ module m3_holes()
         translate([-(eto+euh-fit_tolerance)/2-fit_tolerance+wall_screw_horz,aa*(vertical_buffer+atx_height-wall_screw_vert*2),-ep+grid_wall_thick-m3nut_t-1])cylinder(r2=m3_head_r,r1=m3_slot/2,h=1+ep);
     }
 }
-//atx holes
-module atx_holes_left()
-{
-    //atx screws y centering
-    yy=-(ph/2)+(atx_height+fit_tolerance)/2+3;
-    lower_left_y=yy-atx_height/2+16;
-    upper_left_y=yy-atx_height/2+16+64; //per technical drawings
-    translate([0,lower_left_y,0])
-    {
-    translate([-(eto+euh-fit_tolerance)/2-fit_tolerance+euh,0,-ep])cylinder(r=atx_screw_slot/2,h=grid_wall_thick+ep*2);
-        translate([-(eto+euh-fit_tolerance)/2-fit_tolerance+euh,0,-ep+grid_wall_thick-m3nut_t])cylinder(r=atx_screw_head/2,h=m3nut_t*2);
-        translate([-(eto+euh-fit_tolerance)/2-fit_tolerance+euh,0,-ep+grid_wall_thick-m3nut_t-1])cylinder(r2=atx_screw_head/2,r1=atx_screw_slot/2,h=1+ep);
-    }
-    translate([0,upper_left_y,0])
-    {
-    translate([-(eto+euh-fit_tolerance)/2-fit_tolerance+euh,0,-ep])cylinder(r=atx_screw_slot/2,h=grid_wall_thick+ep*2);
-        translate([-(eto+euh-fit_tolerance)/2-fit_tolerance+euh,0,-ep+grid_wall_thick-m3nut_t])cylinder(r=atx_screw_head/2,h=m3nut_t*2);
-        translate([-(eto+euh-fit_tolerance)/2-fit_tolerance+euh,0,-ep+grid_wall_thick-m3nut_t-1])cylinder(r2=atx_screw_head/2,r1=atx_screw_slot/2,h=1+ep);
-    }
-    
-}
-module atx_holes_right()
-{
-    //atx screws y centering
-    yy=-(ph/2)+(atx_height+fit_tolerance)/2+3;
-    lower_y=yy-atx_height/2+6;
-    upper_y=yy-atx_height/2+16+64; //per technical drawings
-    lower_x=24;
-    translate([lower_x,lower_y,0])
-    {
-    translate([-(eto+euh-fit_tolerance)/2-fit_tolerance+euh,0,-ep])cylinder(r=atx_screw_slot/2,h=grid_wall_thick+ep*2);
-        translate([-(eto+euh-fit_tolerance)/2-fit_tolerance+euh,0,-ep+grid_wall_thick-m3nut_t])cylinder(r=atx_screw_head/2,h=m3nut_t*2);
-        translate([-(eto+euh-fit_tolerance)/2-fit_tolerance+euh,0,-ep+grid_wall_thick-m3nut_t-1])cylinder(r2=atx_screw_head/2,r1=atx_screw_slot/2,h=1+ep);
-    }
-    translate([0,upper_y,0])
-    {
-    translate([-(eto+euh-fit_tolerance)/2-fit_tolerance+euh,0,-ep])cylinder(r=atx_screw_slot/2,h=grid_wall_thick+ep*2);
-        translate([-(eto+euh-fit_tolerance)/2-fit_tolerance+euh,0,-ep+grid_wall_thick-m3nut_t])cylinder(r=atx_screw_head/2,h=m3nut_t*2);
-        translate([-(eto+euh-fit_tolerance)/2-fit_tolerance+euh,0,-ep+grid_wall_thick-m3nut_t-1])cylinder(r2=atx_screw_head/2,r1=atx_screw_slot/2,h=1+ep);
-    }
-    
-}
+
 
 //m4 mount hole, for connection to frame
 module m4_mount()
@@ -208,17 +89,7 @@ module rough_outline(pr)
         circle(r=pr,$fn=40);
     }
 }
-module rough_outline_right(pr)
-{
-    //rough rectangle, one tolerance at edge by post
-    tongue=18;
-    minkowski()
-    {
-        translate([tongue,-ph/2+7.75,0])square([tongue+eto+euh-fit_tolerance-plate_round*2,15.5-plate_round*2],center=true);
-        
-        circle(r=pr,$fn=40);
-    }
-}
+
 module rough_shape()
 {
     //bevel
@@ -235,44 +106,8 @@ module rough_shape()
     }
         
 }
-module rough_shape_right()
-{
-    //bevel
-    hull()
-    {
-        translate([0,0,grid_wall_thick-ep])linear_extrude(height=ep)rough_outline_right(plate_round-bevel);
-        translate([0,0,grid_wall_thick-bevel-ep])linear_extrude(height=ep)rough_outline_right(plate_round);
-    }
-    translate([0,0,bevel])linear_extrude(height=grid_wall_thick-bevel*2)rough_outline_right(plate_round);
-    hull()
-    {
-        translate([0,0,0])linear_extrude(height=ep)rough_outline_right(plate_round-bevel);
-        translate([0,0,bevel])linear_extrude(height=ep)rough_outline_right(plate_round);
-    }
-        
-}
-module atx_cutout()
-{
-    //align such that 3mm 'shelf' at the bottom
-    yy=-(ph/2)+(atx_height+fit_tolerance)/2+3;
-    //alight so that atx ends up in middle
-    xx=-(eto+euh-fit_tolerance)/2+-fit_tolerance+base_ext_l/2;
-    //align for screw depth
-    zz=-(atx_depth/2)+atx_recess;
-    translate([xx,yy,zz])cube([atx_width+fit_tolerance,atx_height+fit_tolerance,atx_depth],center=true);
-}
-module atx_cutout_right()
-{
-    //align such that 3mm 'shelf' at the bottom
-    yy=-(ph/2)+(atx_height+fit_tolerance)/2+3;
-    //alight so that atx ends up in middle
-    xx=-(eto+euh-fit_tolerance)/2+-fit_tolerance+base_ext_l/2;
-    //align for screw depth
-    zz=-(atx_depth/2)+atx_recess;
-    translate([xx,yy,zz])cube([atx_width+fit_tolerance,atx_height+fit_tolerance,atx_depth],center=true);
-    //plug
-    translate([xx-atx_width/2+31.5,yy-atx_height/2+25,zz+atx_depth/2+6.8/2-ep])cube([50,25,16.8],center=true);
-}
+
+
 
     //space occupied
     //distance between screw hole on post, and wall on atx bracket

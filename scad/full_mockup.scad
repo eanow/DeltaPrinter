@@ -61,12 +61,21 @@ cable_guide();
 psu();
 base_posts();
 atx_base_wall();
-//atx base wall()
+
+ramps_board();
+module ramps_board()
+{
+    translate([15,30,0])translate([175/2,0,56/2-91.8+3])rotate([0,0,-30])color([.2,.8,.8])cube([175,62,56],center=true);
+}
 module atx_base_wall()
 {
     short_leg_x=(base_ext_l/2)*2/sqrt(3);
     short_leg=vertex_rad+(base_ext_l/2*sqrt(3))-short_leg_x;
-    translate([-short_leg+10,0,-91.8/2])rotate([0,-90,0])rotate([0,0,-90])import("../stl/atx_base_wall.stl");
+    translate([-short_leg+10,0,-91.8/2])rotate([0,-90,0])rotate([0,0,-90])
+    {
+        import("../stl/atx_base_wall_left.stl");
+        import("../stl/atx_base_wall_right.stl");
+    }
 }
 
 module base_posts()

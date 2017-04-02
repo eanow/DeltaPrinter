@@ -24,9 +24,9 @@ ph=vertical_buffer+atx_height-fit_tolerance*2; //tolerance gap top and bottom
 //ATX box needs a little bit of recess
 atx_recess=grid_wall_thick-(atx_screw_depth+atx_screw_head_t);
 
-right();
+//right();
 //left();
-//base_tie();
+base_tie();
 
 module left()
 {
@@ -86,7 +86,7 @@ module right()
 //connector from m4 to M5 on extrusion
 module base_tie()
 {
-    spacing=(m4_nut_r+2.0)+side/2;
+    spacing=(m4_nut_r+2.0)+side/2+fit_tolerance;
     difference()
     {
         hull()

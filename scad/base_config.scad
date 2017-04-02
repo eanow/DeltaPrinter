@@ -24,3 +24,5 @@ m4_nut_r=8.1/2;
 m3_head_r=6.1/2;
 m3_head_t=2.5;
 m4_slot=4.5;
+
+dual_overlap=(6.6/2+3.2);

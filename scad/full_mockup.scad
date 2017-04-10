@@ -55,7 +55,7 @@ translate([0,0,370])carriage();
 bed_mount();
 //arms();
 nema_dummy();
-ramps();
+//ramps();
 cable_guide();
 //%translate([0,0,150])cube([carriage_r*2,carriage_r*2,300],center=true);
 psu();
@@ -63,8 +63,18 @@ base_posts();
 atx_base_wall();
 ramps_wall();
 
-ramps_board();
+//ramps_board();
 ramps_fan();
+mirror([0,1,0])pica_mount();
+module pica_mount()
+{
+    short_leg_x=(base_ext_l/2)*2/sqrt(3);
+    short_leg=vertex_rad+(base_ext_l/2*sqrt(3))-short_leg_x;
+    rotate([0,0,-120])translate([-short_leg+25+2+118,79+45,-1])
+    {
+        rotate([180,0,180])color([.2,.8,.8])import("../stl/pica-mount.stl");
+    }
+}
 module ramps_board()
 {
     translate([18,8,30])translate([175/2,0,56/2-91.8+3])rotate([0,0,-30])color([.2,.8,.8])cube([114,95,56],center=true);

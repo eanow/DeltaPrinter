@@ -25,10 +25,14 @@ difference()
 {
     union()
     {
-        hull()
+        minkowski()
         {
-            base(nozzle_r);
-            translate([tip_x,tip_y,nozzle_l])tip(nozzle_r/2);
+            hull()
+            {
+                base(nozzle_r);
+                translate([tip_x,tip_y,nozzle_l])tip((nozzle_r/2)-wall);
+            }
+                sphere(r=wall);
         }
         translate([0,0,0])linear_extrude(height=bracket_h)minkowski()
         {
@@ -46,4 +50,12 @@ difference()
         translate([-holespace/2,holespace/2,bracket_h/2])cylinder(h=bracket_h*2,r=(m3_slot/2),center=true);
         translate([holespace/2,holespace/2,bracket_h/2])cylinder(h=bracket_h*2,r=(m3_slot/2),center=true);
         translate([holespace/2,-holespace/2,bracket_h/2])cylinder(h=bracket_h*2,r=(m3_slot/2),center=true);
+        
+        translate([0,0,-50])cube([100,100,100],center=true);
+        hull()
+        {
+            translate([tip_x,tip_y,nozzle_l])tip((nozzle_r/2)-wall);
+            translate([tip_x,tip_y,nozzle_l+wall*2])tip((nozzle_r/2)-wall);
+        }
 }
+//import("../stl/nozzle.stl");

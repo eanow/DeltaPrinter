@@ -3,7 +3,7 @@ module hotend()
     translate([0,0,-8.65])rotate([90,0,0])import("../stl/e3dmockup.stl");
 }
 
-//color([.8,.8,.8])hotend();
+color([.8,.8,.8])hotend();
 module effector()
 {
     import("../stl/effector_tension.stl");
@@ -102,7 +102,7 @@ bracket_h=6;
 //translate([0,47,-20])rotate([135,0,0])nozzle();
 rotate([0,0,-30]){
     translate([0,-fan_yy,-fan_zz])rotate([-(90+fan_angle),0,0])translate([0,0,-bracket_h])nozzle_bracket();
-    //translate([0,-fan_yy,-fan_zz])rotate([-(90+fan_angle),0,0])nozzle();
+    translate([0,-fan_yy,-fan_zz])rotate([-(90+fan_angle),0,0])nozzle();
 }
 rotate([0,0,30]){
     translate([0,fan_yy,-fan_zz])rotate([(90+fan_angle),0,0])translate([0,0,-bracket_h])nozzle_bracket();

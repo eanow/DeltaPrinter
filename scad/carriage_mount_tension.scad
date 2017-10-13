@@ -77,7 +77,9 @@ module base_shape()
             }
         }
         //m5 bolt head
-        translate([-18.71,0,0])cylinder(r=9/2,h=base_thick*4,center=true); //offset manually entered from carriage information
+        //translate([-18.71,0,0])cylinder(r=9.5/2,h=base_thick*4,center=true);
+        translate([-20.26,0,0])cylinder(r=9.5/2,h=base_thick*4,center=true);
+        //offset manually entered from carriage information
     }
 }
 shift=12;

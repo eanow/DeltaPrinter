@@ -1,11 +1,21 @@
 extrusion_width=20; //extrusion that the carriage is intended to fit around
-roller_axle_w=5.31; //width of the fixed portion of the captive bearing
+//roller_axle_w=5.31; //width of the fixed portion of the captive bearing
+roller_axle_w=11;
 axle_r=5/2+.2;
 roller_fixed_axle_r=8.5/2;
-roller_diameter=21.44;
-roller_inset=2.01;  //how far into the extrusion groove the roller fits
+//wheel
+//roller_diameter=21.44;
+//v slot
+roller_diameter=24;
+//wheel
+//roller_inset=2.01;
+//v slot
+roller_inset=1.94-.2;  //how far into the extrusion groove the roller fits
 roller_gap_h=66; //distance, center to center, of the two rollers ont he same side
-roller_thick=7;
+//wheel
+//roller_thick=7;
+//v slot
+roller_thick=11;
 carriage_thick=8; //thickness of the carriage, when considering it as a mostly flat slab
 carriage_clearance=1; //gap between carriage and extrusion
 slider_r=4/2;
@@ -15,6 +25,7 @@ ep=0.01;
 echo((carriage_thick+carriage_clearance+extrusion_width/2));
 //carriage is designed in usage orientation
     xx=roller_diameter/2+extrusion_width/2-roller_inset;
+    endstop_xx=21.44/2+extrusion_width/2-roller_inset;//use old value
     zz=roller_gap_h/2;
     yy=extrusion_width/2+carriage_clearance+carriage_thick;
     hh=((extrusion_width+carriage_thick*2+carriage_clearance*2)-roller_axle_w)/2;
@@ -22,6 +33,7 @@ module roller_axles()
 {
     //place three axles that hold the rollers
     translate([xx,yy,0])rotate([90,0,0])roller_axle();
+    echo(xx);
     translate([-xx,yy,zz])rotate([90,0,0])roller_axle();
     translate([-xx,yy,-zz])rotate([90,0,0])roller_axle();
 }
@@ -84,7 +96,7 @@ module carriage_plate()
     captive_width=xx+roller_fixed_axle_r+cone_fatness-extrusion_width/2-pinch_gap-pinch_width;
     translate([extrusion_width/2+captive_width/2-ep,yy,-22.5+5])rotate([90,0,0])translate([0,0,carriage_thick/2])cube([captive_width,15,carriage_thick],center=true);
     //enstop hitter
-    translate([-xx,yy,tall/2])rotate([90,0,0])linear_extrude(hh)minkowski()
+    translate([-endstop_xx,yy,tall/2])rotate([90,0,0])linear_extrude(hh)minkowski()
     {
         square([6,16],center=true);
         circle(r=2,$fn=30);

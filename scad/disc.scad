@@ -13,6 +13,7 @@ difference()
     }
     translate([0,0,0])rotate([0,0,0])cylinder(r=m5_slot/2,h=50,$fn=20,center=true);
     translate([0,0,25+inside_wall_thick])rotate([0,0,0])cylinder(r=m5_head/2,h=50,$fn=20,center=true);
+    translate([0,0,inside_wall_thick-1+ep])cylinder(r1=m5_slot/2,r2=m5_head/2,h=1);
     translate([0,0,-5])cube([disc_r*4,nut_l,10],center=true);
     translate([2*disc_r+side/2,0,0])cube([disc_r*4,disc_r*4,disc_h*4],center=true);
 }

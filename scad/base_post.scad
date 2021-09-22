@@ -8,7 +8,7 @@ module post_corner()
         union()
         {
             //rounded vertex
-            circle(r=vertex_rad,center=true);          
+            circle(r=vertex_rad);          
         }
         //in plane extrusions
         rotate([0,0,60])translate([-grid_wall_thick/2+vertex_rad,vertex_rad/2])square([grid_wall_thick,vertex_rad],center=true);
@@ -70,6 +70,8 @@ rotate([0,0,60])translate([vertex_rad-inside_wall_thick-grid_wall_thick,wall_scr
         translate([0,0,wall_screw_vert])m3hole();
         translate([0,0,atx_height+vertical_buffer-wall_screw_vert])m3hole();
     }
+    //anti-vibration foot
+    translate([vertex_rad-foot_d/2-2.4,0,atx_height+vertical_buffer])cylinder(d=foot_d,h=8,center=true);
 }
 
 //%translate([0,0,2])base_shape();

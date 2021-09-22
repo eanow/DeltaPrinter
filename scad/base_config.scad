@@ -26,3 +26,5 @@ m3_head_t=2.5;
 m4_slot=4.5;
 
 dual_overlap=(6.6/2+3.2);
+
+foot_d=27;
